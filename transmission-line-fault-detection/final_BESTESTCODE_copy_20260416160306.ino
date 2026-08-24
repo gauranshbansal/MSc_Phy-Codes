@@ -8,7 +8,7 @@ char ssid[] = "GAURANSH";
 char pass[] = "12345678";
 
 /******************** TELEGRAM ********************/
-#define BOT_TOKEN "8429179858:AAHWd97a1RORWlL_WOL46C5ku6-XNsH9VSo"
+#define BOT_TOKEN "<>"
 WiFiClientSecure secured_client;
 UniversalTelegramBot bot(BOT_TOKEN, secured_client);
 
