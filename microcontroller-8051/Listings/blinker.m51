@@ -1,0 +1,54 @@
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                    08/08/2025  15:04:53  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22.4.0, INVOKED BY:
+C:\KEIL_V5\C51\BIN\BL51.EXE .\Objects\blinker.obj TO .\Objects\blinker PRINT (.\Listings\blinker.m51) RAMSIZE (256)
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\blinker.obj (BLINKER)
+
+
+LINK MAP OF MODULE:  .\Objects\blinker (BLINKER)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0015H     ABSOLUTE     
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\blinker (BLINKER)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        BLINKER
+  C:000CH         SYMBOL        DELAY
+  C:000EH         SYMBOL        DELAY1
+  C:0010H         SYMBOL        DELAY2
+  D:0090H         SYMBOL        P1
+  C:0000H         SYMBOL        START
+  C:0000H         LINE#         4
+  C:0003H         LINE#         5
+  C:0005H         LINE#         6
+  C:0008H         LINE#         7
+  C:000AH         LINE#         8
+  C:000CH         LINE#         12
+  C:000EH         LINE#         14
+  C:0010H         LINE#         16
+  C:0012H         LINE#         17
+  C:0014H         LINE#         18
+  -------         ENDMOD        BLINKER
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 0015H BYTE ( 1%) *
+******************************************************************************
+
+Program Size: data=8.0 xdata=0 code=21
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

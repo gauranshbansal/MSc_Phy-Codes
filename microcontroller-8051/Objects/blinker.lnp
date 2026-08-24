@@ -1,0 +1,3 @@
+".\Objects\blinker.obj" 
+TO ".\Objects\blinker" 
+PRINT(".\Listings\blinker.m51") RAMSIZE(256) 

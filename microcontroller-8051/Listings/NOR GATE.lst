@@ -1,0 +1,47 @@
+A51 MACRO ASSEMBLER  NOR_GATE                                                             08/19/2025 15:00:14 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+NO OBJECT MODULE REQUESTED
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE NOR GATE.asm SET(SMALL) DEBUG PRINT(.\Listings\NOR GATE.lst) OBJECT(.\O
+                      bjects\NOR GATE.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1     ORG 0000H
+0000 7590FF            2             START: MOV P1, #0FFH
+0003 209000            3             MAIN: JB P1.0 , CHECKB
+                       4             SJNP A_LOW
+*** _________________________________^
+*** ERROR #A9 IN 4 (NOR GATE.asm, LINE 4): SYNTAX ERROR
+0006 20910B            5             CHECKB: JB P1.1 , NORO
+0009 8000              6              SJMP A_LOW
+000B 209106            7              A_LOW: JB P1.1 , NORO
+000E 8000              8              SJMP NOR1
+0010 D292              9              NOR1: SETB P1.2
+0012 80EF             10              SJMP MAIN
+0014 C292             11              NORO: CLR P1.2
+0016 80EB             12              SJMP MAIN
+                      13              END 
+A51 MACRO ASSEMBLER  NOR_GATE                                                             08/19/2025 15:00:14 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+A_LOW. . . . . . .  C ADDR   000BH   A   
+CHECKB . . . . . .  C ADDR   0006H   A   
+MAIN . . . . . . .  C ADDR   0003H   A   
+NOR1 . . . . . . .  C ADDR   0010H   A   
+NORO . . . . . . .  C ADDR   0014H   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+SJNP . . . . . . .    ----   -----       
+START. . . . . . .  C ADDR   0000H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 1 ERROR(S)

@@ -1,0 +1,3 @@
+".\Objects\Blinker2.obj" 
+TO ".\Objects\Blinker2" 
+PRINT(".\Listings\Blinker2.m51") RAMSIZE(256) 

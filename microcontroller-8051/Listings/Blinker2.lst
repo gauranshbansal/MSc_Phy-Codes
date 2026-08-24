@@ -1,0 +1,49 @@
+A51 MACRO ASSEMBLER  BLINKER2                                                             08/12/2025 15:54:07 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\Blinker2.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE Blinker2.asm SET(SMALL) DEBUG PRINT(.\Listings\Blinker2.lst) OBJECT(.\O
+                      bjects\Blinker2.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1     ORG 0x00       ; Program start address
+                       2     
+0000                   3     START:
+0000 7590AA            4         MOV P1, #0AAH    ; Turn ON LEDs at even positions (10101010)
+0003 110C              5         ACALL DELAY
+0005 759055            6         MOV P1, #055H    ; Turn ON LEDs at odd positions (01010101)
+0008 110C              7         ACALL DELAY
+000A 80F4              8         SJMP START       ; Loop forever
+                       9     
+                      10     ; Simple delay routine
+000C                  11     DELAY:
+000C 7AFF             12         MOV R2, #0FFH    ; Outer loop count
+000E                  13     DELAY1:
+000E 79FF             14         MOV R1, #0FFH    ; Inner loop count
+0010                  15     DELAY2:
+0010 D9FE             16         DJNZ R1, DELAY2
+0012 DAFA             17         DJNZ R2, DELAY1
+0014 22               18         RET
+                      19     
+                      20     END
+A51 MACRO ASSEMBLER  BLINKER2                                                             08/12/2025 15:54:07 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+DELAY. . . . . . .  C ADDR   000CH   A   
+DELAY1 . . . . . .  C ADDR   000EH   A   
+DELAY2 . . . . . .  C ADDR   0010H   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+START. . . . . . .  C ADDR   0000H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

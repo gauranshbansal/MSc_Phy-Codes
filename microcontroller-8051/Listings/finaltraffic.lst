@@ -1,0 +1,128 @@
+A51 MACRO ASSEMBLER  FINALTRAFFIC                                                         08/21/2025 14:22:03 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\finaltraffic.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE finaltraffic.asm SET(SMALL) DEBUG PRINT(.\Listings\finaltraffic.lst) OB
+                      JECT(.\Objects\finaltraffic.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     ;---------------------------------------------------
+                       2     ; SINGLE TRAFFIC LIGHT + 7-SEGMENT COUNTER
+                       3     ; Microcontroller: AT89S52
+                       4     ; Clock: 11.0592 MHz (12 clocks/mc)
+                       5     ; Port 1: LEDs (P1.0=RED, P1.1=YELLOW, P1.2=GREEN)
+                       6     ; Port 2: 7-seg display (common ANODE)
+                       7     ;---------------------------------------------------
+                       8     
+0000                   9     ORG 0000H
+0000 800A             10     SJMP START
+                      11     
+                      12     ;---------------------------------------------------
+                      13     ; 7-seg digit patterns for 0-9 (common anode)
+                      14     ;---------------------------------------------------
+                      15     ; NOTE: In common anode, logic is inverted (active LOW).
+                      16     ; Original cathode patterns (CC): 7Eh, 06h, 5Bh, 4Fh, 66h, 6Dh, 7Dh, 07h, 7Fh, 6Fh
+                      17     ; Inverted patterns (CA):         81h, F9h, A4h, B0h, 99h, 92h, 82h, F8h, 80h, 90h
+                      18     ;---------------------------------------------------
+0002                  19     SEG_TABLE:
+0002 81F9A4B0         20         DB 081h, 0F9h, 0A4h, 0B0h, 099h, 092h, 082h, 0F8h, 080h, 090h
+0006 999282F8                
+000A 8090                    
+                      21     
+                      22     ;---------------------------------------------------
+                      23     ; START
+                      24     ;---------------------------------------------------
+000C                  25     START:
+000C 759000           26         MOV P1, #00H     ; Turn OFF all LEDs
+000F 75A0FF           27         MOV P2, #0FFH    ; All segments OFF initially (common anode idle = 1)
+                      28     
+0012                  29     MAIN_LOOP:
+                      30     
+                      31         ; === GREEN for 10 seconds ===
+0012 D292             32         SETB P1.2        ; Green ON
+0014 C290             33         CLR  P1.0
+0016 C291             34         CLR  P1.1
+0018 7D0A             35         MOV  R5, #10     ; Seconds counter
+001A                  36     GREEN_COUNT:
+001A ED               37         MOV  A, R5
+001B 1141             38         ACALL DISPLAY_DIGIT
+001D 1148             39         ACALL DELAY1S
+001F DDF9             40         DJNZ R5, GREEN_COUNT
+                      41     
+                      42         ; === YELLOW for 3 seconds ===
+0021 D291             43         SETB P1.1
+0023 C292             44         CLR  P1.2
+0025 C290             45         CLR  P1.0
+0027 7D03             46         MOV  R5, #3
+0029                  47     YELLOW_COUNT:
+0029 ED               48         MOV  A, R5
+002A 1141             49         ACALL DISPLAY_DIGIT
+002C 1148             50         ACALL DELAY1S
+002E DDF9             51         DJNZ R5, YELLOW_COUNT
+                      52     
+                      53         ; === RED for 10 seconds ===
+0030 D290             54         SETB P1.0
+0032 C291             55         CLR  P1.1
+A51 MACRO ASSEMBLER  FINALTRAFFIC                                                         08/21/2025 14:22:03 PAGE     2
+
+0034 C292             56         CLR  P1.2
+0036 7D0A             57         MOV  R5, #10
+0038                  58     RED_COUNT:
+0038 ED               59         MOV  A, R5
+0039 1141             60         ACALL DISPLAY_DIGIT
+003B 1148             61         ACALL DELAY1S
+003D DDF9             62         DJNZ R5, RED_COUNT
+                      63     
+003F 80D1             64         SJMP MAIN_LOOP
+                      65     
+                      66     ;---------------------------------------------------
+                      67     ; DISPLAY_DIGIT: A = digit 0-9 ? outputs to Port 2
+                      68     ;---------------------------------------------------
+0041                  69     DISPLAY_DIGIT:
+0041 900002           70         MOV  DPTR, #SEG_TABLE
+0044 93               71         MOVC A, @A+DPTR  ; Lookup pattern from table
+0045 F5A0             72         MOV  P2, A       ; Output to 7-seg
+0047 22               73         RET
+                      74     
+                      75     ;---------------------------------------------------
+                      76     ; Calibrated ~1s delay @ 11.0592 MHz
+                      77     ;---------------------------------------------------
+0048                  78     DELAY1S:
+0048 7A08             79         MOV R2, #08
+004A 79F0             80     D1: MOV R1, #240
+004C 78F0             81     D2: MOV R0, #240
+004E D8FE             82     D3: DJNZ R0, D3
+0050 D9FA             83         DJNZ R1, D2
+0052 DAF6             84         DJNZ R2, D1
+0054 22               85         RET
+                      86     
+                      87     END
+A51 MACRO ASSEMBLER  FINALTRAFFIC                                                         08/21/2025 14:22:03 PAGE     3
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+D1 . . . . . . . .  C ADDR   004AH   A   
+D2 . . . . . . . .  C ADDR   004CH   A   
+D3 . . . . . . . .  C ADDR   004EH   A   
+DELAY1S. . . . . .  C ADDR   0048H   A   
+DISPLAY_DIGIT. . .  C ADDR   0041H   A   
+GREEN_COUNT. . . .  C ADDR   001AH   A   
+MAIN_LOOP. . . . .  C ADDR   0012H   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+P2 . . . . . . . .  D ADDR   00A0H   A   
+RED_COUNT. . . . .  C ADDR   0038H   A   
+SEG_TABLE. . . . .  C ADDR   0002H   A   
+START. . . . . . .  C ADDR   000CH   A   
+YELLOW_COUNT . . .  C ADDR   0029H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

@@ -1,0 +1,95 @@
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                    08/21/2025  14:22:04  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22.4.0, INVOKED BY:
+C:\KEIL_V5\C51\BIN\BL51.EXE .\Objects\finaltraffic.obj TO .\Objects\finaltraffic PRINT (.\Listings\finaltraffic.m51) RAM
+>> SIZE (256)
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\finaltraffic.obj (FINALTRAFFIC)
+
+
+LINK MAP OF MODULE:  .\Objects\finaltraffic (FINALTRAFFIC)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0055H     ABSOLUTE     
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\finaltraffic (FINALTRAFFIC)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        FINALTRAFFIC
+  C:004AH         SYMBOL        D1
+  C:004CH         SYMBOL        D2
+  C:004EH         SYMBOL        D3
+  C:0048H         SYMBOL        DELAY1S
+  C:0041H         SYMBOL        DISPLAY_DIGIT
+  C:001AH         SYMBOL        GREEN_COUNT
+  C:0012H         SYMBOL        MAIN_LOOP
+  D:0090H         SYMBOL        P1
+  D:00A0H         SYMBOL        P2
+  C:0038H         SYMBOL        RED_COUNT
+  C:0002H         SYMBOL        SEG_TABLE
+  C:000CH         SYMBOL        START
+  C:0029H         SYMBOL        YELLOW_COUNT
+  C:0000H         LINE#         10
+  C:000CH         LINE#         26
+  C:000FH         LINE#         27
+  C:0012H         LINE#         32
+  C:0014H         LINE#         33
+  C:0016H         LINE#         34
+  C:0018H         LINE#         35
+  C:001AH         LINE#         37
+  C:001BH         LINE#         38
+  C:001DH         LINE#         39
+  C:001FH         LINE#         40
+  C:0021H         LINE#         43
+  C:0023H         LINE#         44
+  C:0025H         LINE#         45
+  C:0027H         LINE#         46
+  C:0029H         LINE#         48
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  08/21/2025  14:22:04  PAGE 2
+
+
+  C:002AH         LINE#         49
+  C:002CH         LINE#         50
+  C:002EH         LINE#         51
+  C:0030H         LINE#         54
+  C:0032H         LINE#         55
+  C:0034H         LINE#         56
+  C:0036H         LINE#         57
+  C:0038H         LINE#         59
+  C:0039H         LINE#         60
+  C:003BH         LINE#         61
+  C:003DH         LINE#         62
+  C:003FH         LINE#         64
+  C:0041H         LINE#         70
+  C:0044H         LINE#         71
+  C:0045H         LINE#         72
+  C:0047H         LINE#         73
+  C:0048H         LINE#         79
+  C:004AH         LINE#         80
+  C:004CH         LINE#         81
+  C:004EH         LINE#         82
+  C:0050H         LINE#         83
+  C:0052H         LINE#         84
+  C:0054H         LINE#         85
+  -------         ENDMOD        FINALTRAFFIC
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 0055H BYTE ( 4%) *
+******************************************************************************
+
+Program Size: data=8.0 xdata=0 code=85
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

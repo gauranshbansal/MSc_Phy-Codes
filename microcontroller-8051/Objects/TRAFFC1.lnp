@@ -1,0 +1,3 @@
+".\Objects\TRAFFIC1.obj" 
+TO ".\Objects\TRAFFC1" 
+PRINT(".\Listings\TRAFFC1.m51") RAMSIZE(256) 

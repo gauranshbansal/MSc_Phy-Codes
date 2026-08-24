@@ -1,0 +1,3 @@
+".\Objects\finaltraffic.obj" 
+TO ".\Objects\finaltraffic" 
+PRINT(".\Listings\finaltraffic.m51") RAMSIZE(256) 

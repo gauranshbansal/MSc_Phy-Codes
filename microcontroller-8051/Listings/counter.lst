@@ -1,0 +1,136 @@
+A51 MACRO ASSEMBLER  COUNTER                                                              08/14/2025 16:59:53 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\counter.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE counter.asm SET(SMALL) DEBUG PRINT(.\Listings\counter.lst) OBJECT(.\Obj
+                      ects\counter.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     ; ---------------------------------------------------------------------
+                       2     ; AT89S52 - 7-Segment single-digit counter 0..9
+                       3     ; P2.0 = segment 'a'  (LSB)
+                       4     ; P2.1 = 'b'
+                       5     ; ...
+                       6     ; P2.6 = 'g'
+                       7     ; P2.7 unused
+                       8     ;
+                       9     ; Uses Timer0 (16-bit mode) to create precise 1 second delay
+                      10     ; Assumes crystal = 11.0592 MHz -> machine cycles/sec = 11.0592/12 = 921,600
+                      11     ; 1 second = 921,600 machine cycles
+                      12     ; 921,600 = 14 * 65536 + 4096
+                      13     ; So we wait 14 full overflows (starting at 0x0000) and one overflow starting at 0xF000 (65
+                             536-4096)
+                      14     ; ---------------------------------------------------------------------
+                      15     
+0000                  16                 ORG 0000H
+                      17     
+                      18     ;---------------------------
+                      19     ; Lookup table for digits 0-9
+                      20     ; P2 bits:  P2.6 P2.5 P2.4 P2.3 P2.2 P2.1 P2.0  (gfedcba)
+                      21     ; Values are for common-cathode: segment ON = 1
+                      22     ;---------------------------
+0000 3F065B4F         23     TABLE:      DB 03FH, 06H, 05BH, 04FH, 066H, 06DH, 07DH, 07H, 07FH, 06FH
+0004 666D7D07                
+0008 7F6F                    
+                      24     ;   0       1     2      3      4      5      6     7     8      9
+                      25     
+                      26     ;---------------------------
+                      27     ; Reset/vector start
+                      28     ;---------------------------
+000A                  29     START:
+000A 758170           30                 MOV SP, #70H        ; Stack pointer (safe area)
+000D 75A000           31                 MOV P2, #00H        ; Clear P2 initially (all segments off)
+0010 758901           32                 MOV TMOD, #01H      ; Timer0 mode 1 (16-bit)
+0013 C28C             33                 CLR TR0             ; Ensure Timer0 stopped
+0015 C28D             34                 CLR TF0             ; Clear timer overflow flag
+                      35     
+0017 7800             36                 MOV R0, #00H        ; digit index = 0
+                      37     
+0019                  38     MAIN_LOOP:
+                      39                 ; Fetch pattern and output to Port 2
+0019 E8               40                 MOV A, R0
+001A 900000           41                 MOV DPTR, #TABLE
+001D 93               42                 MOVC A, @A+DPTR     ; A = TABLE[R0]
+001E F5A0             43                 MOV P2, A
+                      44     
+                      45                 ; Delay 1 second using Timer0 overflows
+0020 112B             46                 ACALL DELAY_1S
+                      47     
+                      48                 ; Advance digit
+0022 08               49                 INC R0
+0023 E8               50                 MOV A, R0
+0024 B40A02           51                 CJNE A, #0AH, CONTINUE
+0027 7800             52                 MOV R0, #00H        ; wrap after 9->0
+0029                  53     CONTINUE:
+0029 80EE             54                 SJMP MAIN_LOOP
+A51 MACRO ASSEMBLER  COUNTER                                                              08/14/2025 16:59:53 PAGE     2
+
+                      55     
+                      56     ;----------------------------------------------------------------
+                      57     ; DELAY_1S - wait exactly 1.000 second (assuming 11.0592 MHz crystal)
+                      58     ; Implementation: 14 full overflows from 0x0000, then 1 overflow from 0xF000.
+                      59     ;----------------------------------------------------------------
+002B                  60     DELAY_1S:
+                      61                 ; Clear TF0 and stop timer just in case
+002B C28C             62                 CLR TR0
+002D C28D             63                 CLR TF0
+                      64     
+002F 7A0E             65                 MOV R2, #14         ; count of full overflows (14)
+0031                  66     FULL_OVF_LOOP:
+                      67                 ; Load timer to 0x0000 by writing TH0/TL0
+0031 758C00           68                 MOV TH0, #00H
+0034 758A00           69                 MOV TL0, #00H
+0037 C28D             70                 CLR TF0
+0039 D28C             71                 SETB TR0            ; start Timer0
+003B                  72     WAIT_FULL:
+003B 308DFD           73                 JNB TF0, WAIT_FULL  ; wait for overflow (TF0=1)
+003E C28C             74                 CLR TR0
+0040 C28D             75                 CLR TF0
+0042 DAED             76                 DJNZ R2, FULL_OVF_LOOP
+                      77     
+                      78                 ; Now do final partial overflow: start from 0xF000 so timer needs 4096 counts
+0044 758CF0           79                 MOV TH0, #0F0H     ; TH0 = 0xF0 (high byte of 0xF000)
+0047 758A00           80                 MOV TL0, #00H      ; TL0 = 0x00
+004A C28D             81                 CLR TF0
+004C D28C             82                 SETB TR0
+004E                  83     WAIT_PARTIAL:
+004E 308DFD           84                 JNB TF0, WAIT_PARTIAL
+0051 C28C             85                 CLR TR0
+0053 C28D             86                 CLR TF0
+0055 22               87                 RET
+                      88     
+                      89     ;----------------------------------------------------------------
+                      90     ; End of program
+                      91     ;----------------------------------------------------------------
+                      92                 END START
+A51 MACRO ASSEMBLER  COUNTER                                                              08/14/2025 16:59:53 PAGE     3
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+CONTINUE . . . . .  C ADDR   0029H   A   
+DELAY_1S . . . . .  C ADDR   002BH   A   
+FULL_OVF_LOOP. . .  C ADDR   0031H   A   
+MAIN_LOOP. . . . .  C ADDR   0019H   A   
+P2 . . . . . . . .  D ADDR   00A0H   A   
+SP . . . . . . . .  D ADDR   0081H   A   
+START. . . . . . .  C ADDR   000AH   A   
+TABLE. . . . . . .  C ADDR   0000H   A   
+TF0. . . . . . . .  B ADDR   0088H.5 A   
+TH0. . . . . . . .  D ADDR   008CH   A   
+TL0. . . . . . . .  D ADDR   008AH   A   
+TMOD . . . . . . .  D ADDR   0089H   A   
+TR0. . . . . . . .  B ADDR   0088H.4 A   
+WAIT_FULL. . . . .  C ADDR   003BH   A   
+WAIT_PARTIAL . . .  C ADDR   004EH   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

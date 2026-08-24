@@ -1,0 +1,45 @@
+A51 MACRO ASSEMBLER  NOR_GATE1                                                            08/19/2025 15:17:07 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+NO OBJECT MODULE REQUESTED
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE nor gate1.asm SET(SMALL) DEBUG PRINT(.\Listings\nor gate1.lst) OBJECT(.
+                      \Objects\nor gate1.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000 E590              1     MOV A,P1
+0002 5403              2     ANL A,#03H
+0004                   3     JNZ OUTPUT LOW 
+*** ____________________________________^
+*** ________________________________________^
+*** ERROR #A9 IN 3 (nor gate1.asm, LINE 3): SYNTAX ERROR
+*** ERROR #A15 IN 3 (nor gate1.asm, LINE 3): MISSING FACTOR
+0004 750001            4     MOV P1.2,#1
+*** _____________________________^
+*** ERROR #A48 IN 4 (nor gate1.asm, LINE 4): DATA-ADDRESS EXPECTED
+0007                   5     SJMP END
+*** ______________________________^
+*** ERROR #A9 IN 5 (nor gate1.asm, LINE 5): SYNTAX ERROR
+0007                   6     OUTPUT_LOW: 
+0007 C292              7     CLR P1.2
+                       8     END:
+*** _________________________^
+*** ERROR #A5 IN 8 (nor gate1.asm, LINE 8): ILLEGAL USE OF A RESERVED WORD
+A51 MACRO ASSEMBLER  NOR_GATE1                                                            08/19/2025 15:17:07 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+OUTPUT . . . . . .    ----   -----       
+OUTPUT_LOW . . . .  C ADDR   0007H   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 5 ERROR(S)

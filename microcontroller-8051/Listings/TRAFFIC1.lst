@@ -1,0 +1,104 @@
+A51 MACRO ASSEMBLER  TRAFFIC1                                                             08/14/2025 14:52:15 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\TRAFFIC1.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE TRAFFIC1.asm SET(SMALL) DEBUG PRINT(.\Listings\TRAFFIC1.lst) OBJECT(.\O
+                      bjects\TRAFFIC1.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     ;---------------------------------------------------
+                       2     ; SINGLE TRAFFIC LIGHT CONTROLLER (FIXED DELAYS)
+                       3     ; Microcontroller: AT89S52 (8051 core)
+                       4     ; Clock: 11.0592 MHz (classic 8051: 12 clocks/machine cycle)
+                       5     ; Port: P1.0 = RED, P1.1 = YELLOW, P1.2 = GREEN
+                       6     ;---------------------------------------------------
+                       7     
+0000                   8     ORG 0000H         ; Program starts at memory address 0
+0000 8000              9     SJMP START        ; Jump to START section of program
+                      10     
+                      11     ;---------------------------------------------------
+                      12     ; START OF PROGRAM
+                      13     ;---------------------------------------------------
+0002                  14     START:
+0002 759000           15         MOV P1, #00H      ; Turn OFF all LEDs at the beginning
+                      16     
+0005                  17     MAIN_LOOP:
+                      18     
+                      19         ; === GREEN LIGHT ON (10 seconds) ===
+0005 D292             20         SETB P1.2         ; Turn ON Green LED
+0007 C290             21         CLR  P1.0         ; Make sure Red is OFF
+0009 C291             22         CLR  P1.1         ; Make sure Yellow is OFF
+000B 1133             23         ACALL DELAY10S    ; Wait for 10 seconds
+                      24     
+                      25         ; === YELLOW LIGHT ON (3 seconds) ===
+000D D291             26         SETB P1.1         ; Turn ON Yellow LED
+000F C292             27         CLR  P1.2         ; Turn OFF Green
+0011 C290             28         CLR  P1.0         ; Keep Red OFF for now
+0013 112C             29         ACALL DELAY3S     ; Wait for 3 seconds
+                      30     
+                      31         ; === RED LIGHT ON (10 seconds) ===
+0015 D290             32         SETB P1.0         ; Turn ON Red LED
+0017 C291             33         CLR  P1.1         ; Turn OFF Yellow
+0019 C292             34         CLR  P1.2         ; Turn OFF Green
+001B 1133             35         ACALL DELAY10S    ; Wait for 10 seconds
+                      36     
+001D 80E6             37         SJMP MAIN_LOOP    ; Go back and repeat forever
+                      38     
+                      39     ;---------------------------------------------------
+                      40     ; DELAY SUBROUTINES (Calibrated for ~1s @ 11.0592 MHz)
+                      41     ;---------------------------------------------------
+                      42     
+                      43     ; ~1.006 s delay with R2=8, R1=240, R0=240
+001F                  44     DELAY1S:
+001F 7A08             45         MOV R2, #08       ; Outer loop
+0021 79F0             46     D1: MOV R1, #240      ; Middle loop
+0023 78F0             47     D2: MOV R0, #240      ; Inner loop
+0025 D8FE             48     D3: DJNZ R0, D3
+0027 D9FA             49         DJNZ R1, D2
+0029 DAF6             50         DJNZ R2, D1
+002B 22               51         RET
+                      52     
+                      53     ; ~3 second delay
+002C                  54     DELAY3S:
+002C 7F03             55         MOV R7, #3
+002E 111F             56     DL3: ACALL DELAY1S
+0030 DFFC             57         DJNZ R7, DL3
+A51 MACRO ASSEMBLER  TRAFFIC1                                                             08/14/2025 14:52:15 PAGE     2
+
+0032 22               58         RET
+                      59     
+                      60     ; ~10 second delay
+0033                  61     DELAY10S:
+0033 7F0A             62         MOV R7, #10
+0035 111F             63     DL10: ACALL DELAY1S
+0037 DFFC             64         DJNZ R7, DL10
+0039 22               65         RET
+                      66     
+                      67     END
+A51 MACRO ASSEMBLER  TRAFFIC1                                                             08/14/2025 14:52:15 PAGE     3
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+D1 . . . . . . . .  C ADDR   0021H   A   
+D2 . . . . . . . .  C ADDR   0023H   A   
+D3 . . . . . . . .  C ADDR   0025H   A   
+DELAY10S . . . . .  C ADDR   0033H   A   
+DELAY1S. . . . . .  C ADDR   001FH   A   
+DELAY3S. . . . . .  C ADDR   002CH   A   
+DL10 . . . . . . .  C ADDR   0035H   A   
+DL3. . . . . . . .  C ADDR   002EH   A   
+MAIN_LOOP. . . . .  C ADDR   0005H   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+START. . . . . . .  C ADDR   0002H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

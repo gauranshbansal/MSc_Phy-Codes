@@ -1,0 +1,39 @@
+A51 MACRO ASSEMBLER  NOR                                                                  08/19/2025 16:06:05 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\NOR.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE NOR.asm SET(SMALL) DEBUG PRINT(.\Listings\NOR.lst) OBJECT(.\Objects\NOR
+                      .obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1           ORG 0000H
+0000 D290              2                       MAIN:  SETB P1.0 ;
+0002 D291              3                       SETB P1.1
+0004 A290              4                       LOOP: MOV C, P1.0 ;
+0006 7291              5                       ORL C, P1.1 ;
+                       6                      ; OR B 
+0008 B3                7                        CPL C ;
+                       8                      ;  NOT(A OR B ) = NOR
+0009 9292              9                        MOV P1.2, C ;
+                      10                       ; (drive LED)
+000B 80F7             11                        SJMP LOOP
+                      12                        END
+A51 MACRO ASSEMBLER  NOR                                                                  08/19/2025 16:06:05 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+LOOP . . . . . . .  C ADDR   0004H   A   
+MAIN . . . . . . .  C ADDR   0000H   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

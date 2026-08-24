@@ -1,0 +1,39 @@
+A51 MACRO ASSEMBLER  GROUP16                                                              08/07/2025 15:15:07 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\Group16.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE Group16.asm SET(SMALL) DEBUG PRINT(.\Listings\Group16.lst) OBJECT(.\Obj
+                      ects\Group16.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     ; Program to add two numbers and store result
+0000                   2     ORG 0000H         ; Start of code
+                       3     
+0000                   4     START:
+0000 7425              5         MOV A, #25H    ; Load first number (37 in decimal)
+0002 2417              6         ADD A, #17H    ; Add second number (23 in decimal), A = 25H + 17H = 3CH
+                       7     
+0004 F590              8         MOV P1, A      ; Output result to Port 1 (P1.0 - P1.7) for LED display
+                       9     
+0006 80FE             10     HERE: SJMP HERE    ; Endless loop to keep result
+                      11     
+                      12     END
+A51 MACRO ASSEMBLER  GROUP16                                                              08/07/2025 15:15:07 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+HERE . . . . . . .  C ADDR   0006H   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+START. . . . . . .  C ADDR   0000H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

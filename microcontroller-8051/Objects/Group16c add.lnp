@@ -1,0 +1,3 @@
+".\Objects\Group16c add.obj" 
+TO ".\Objects\Group16c add" 
+PRINT(".\Listings\Group16c add.m51") RAMSIZE(256) 
