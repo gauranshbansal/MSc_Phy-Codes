@@ -1,0 +1,31 @@
+# Build products
+build/
+*.exe
+*.out
+*.o
+*.obj
+
+# Generated numerical data and plots
+*.dat
+*.eps
+*.pdf
+*.png
+*.svg
+*.txt
+!docs/*.md
+!README.md
+
+# Editor and OS noise
+*~
+\#*#
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Keep output folders visible
+!data/.gitkeep
+!results/.gitkeep
